@@ -1,0 +1,157 @@
+<div class="container">
+  <h5>Medicos</h5>
+<!-- Tabla de datos -->
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Especialidad</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">DNI</th>
+        <th>
+            <a class="bi bi-file-earmark-plus" (click)="seleccionar(0)" data-bs-toggle="modal" data-bs-target="#agregarModal"
+            style="font-size: 25px;"></a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of productos">
+        <th scope="row">{{item.id}}</th>
+        <td>{{item.nombre}}</td>
+        <td>{{item.especialidad}}</td>
+        <td>{{item.telefono}}</td>
+        <td>{{item.dni}}</td>
+        <td>
+            <!-- <a class="bi bi-search" 
+              style="font-size: 25px;"></a> -->
+            <a class="bi bi-pencil" (click)="seleccionar(item)" data-bs-toggle="modal" data-bs-target="#editarModal" 
+              style="font-size: 25px;"></a>
+            <a class="bi bi-trash3"  (click)="seleccionar(item)" data-bs-toggle="modal" data-bs-target="#eliminarModal"
+              style="font-size: 25px;"></a>
+            
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+<!-- Agregar -->
+
+<div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Médico
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-primary" role="alert" *ngIf="error">
+          {{error}}
+        </div>
+        
+        <form *ngIf="seleccion">    
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+            <input [(ngModel)]="seleccion.nombre" class="form-control" 
+            placeholder="Nombre"   [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Especialidad</label>
+            <input [(ngModel)]="seleccion.especialidad" class="form-control" 
+            placeholder="Especialidad"   [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Teléfono</label>
+            <input [(ngModel)]="seleccion.telefono" class="form-control" 
+            placeholder="Teléfono"   [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">DNI</label>
+            <input [(ngModel)]="seleccion.dni" class="form-control" 
+            placeholder="DNI"   [ngModelOptions]="{standalone: true}">
+          </div>
+        </form>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="agregar()">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario de edicion -->
+
+<!-- Modal -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Médico
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-primary" role="alert" *ngIf="error">
+          {{error}}
+        </div>
+        
+        <form *ngIf="seleccion">    
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Nombre</label>
+            <input [(ngModel)]="seleccion.nombre" class="form-control" 
+            placeholder="Nombre"   [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Especialidad</label>
+            <input [(ngModel)]="seleccion.especialidad" class="form-control" 
+            placeholder="Especialidad"   [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Teléfono</label>
+            <input [(ngModel)]="seleccion.telefono" class="form-control" 
+            placeholder="Especialidad"   [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">DNI</label>
+            <input [(ngModel)]="seleccion.dni" class="form-control" 
+            placeholder="Especialidad"   [ngModelOptions]="{standalone: true}">
+          </div>
+        </form>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="editar()">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Confirmacion de eliminacion -->
+
+<!-- Modal -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar Médico
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="seleccion">
+        <div class="alert alert-primary" role="alert" *ngIf="error">
+          {{error}}
+        </div>
+        ¿Esta seguro de eliminar el médico {{seleccion.nombre}}, con el id {{seleccion.id}}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="eliminar()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
